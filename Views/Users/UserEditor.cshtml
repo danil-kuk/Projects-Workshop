@@ -1,0 +1,45 @@
+﻿@model Projects_Workshop.Models.ViewModels.UserEditor
+@{
+    ViewData["Title"] = "User Editor";
+}
+@if (TempData["message"] != null)
+{
+    string alertType = "alert alert-" + TempData["alertType"];
+    <div class="@alertType">
+        @TempData["message"]
+    </div>
+}
+@{
+    var title = Model.UserName ?? "Новый студент";
+}
+<form role="form" asp-action="AddUser">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="big-card">
+            <h3>@title</h3>
+            <label>ФИО Студента: </label>
+            @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+            <br />
+            <label>Академическая группа: </label>
+            @Html.EditorFor(model => model.UserGroup, new { htmlAttributes = new { @class = "form-control" } })
+            <br />
+            <label>Курс: </label>
+            @Html.EditorFor(model => model.UserCourse, new { htmlAttributes = new { @class = "form-control" } })
+            <br />
+            <label>Команда: </label> <br />
+            <div class="small-select">
+                <select asp-for="SelectedTeam" asp-items="Model.AllTeams" id="team-selection"></select>
+            </div>
+            <br />
+            <div class="project-page-buttons">
+                <input type="submit" value="Сохранить" class="submit-button" />
+                <a class="delete-button" asp-action="AllUsers">Отмена</a>
+            </div>
+            <div hidden>
+                @Html.EditorFor(model => model.UserId)
+            </div>
+        </div>
+    }
+</form>

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<Projects_Workshop.Models.Entities.User>
+@{
+    ViewData["Title"] = "Студенты";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="add-new-button">
+    <a asp-action="UserEditor" asp-route-id="">Добавить студента</a>
+    <a asp-action="DownloadFile">Выгрузить данные</a>
+</div>
+
+<div class="students">
+    @foreach (var item in Model)
+    {
+        <p>
+            @item.Name
+            (@item.Team?.Name, @item.Course курс, @item.Group) -
+            <a asp-area="" asp-controller="Projects" asp-action="ProjectPage" asp-route-id="@item.Project?.Id">@item.Project?.Name</a> ||
+            <a asp-action="UserEditor" asp-route-id="@item.Id">Редактировать</a> |
+            <a class="delete-button" asp-action="DeleteUser" asp-route-id="@item.Id">Удалить</a>
+        </p>
+    }
+</div>

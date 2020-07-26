@@ -1,0 +1,33 @@
+﻿@model IEnumerable<Projects_Workshop.Models.Entities.Team>
+@{
+    ViewData["Title"] = "Команды";
+}
+<h1>@ViewData["Title"]</h1>
+
+<div class="add-new-button">
+    <a asp-action="TeamEditor" asp-route-id="">Добавить команду</a>
+</div>
+<h3>Сортировать по: </h3>
+<div class="sort-links">
+    <a asp-action="AllTeams" asp-route-sortOrder="@ViewData["TeamNameSortParm"]">@ViewData["TeamNameSort"]</a>
+    <a asp-action="AllTeams" asp-route-sortOrder="@ViewData["MembersSortParm"]">@ViewData["MembersSort"]</a>
+</div>
+<div class="teams">
+    @foreach (var item in Model)
+    {
+        <p>
+            @{
+                var members = "";
+                foreach (var member in item.Members)
+                {
+                    members += member.Name + ", ";
+                }
+                if (members.Length > 2)
+                    members = members.Substring(0, members.Length - 2);
+            }
+            @item.Name (@members) - <a asp-controller="Projects" asp-action="ProjectPage" asp-route-id="@item.Project?.Id">@item.Project?.Name</a> ||
+            <a asp-action="TeamEditor" asp-route-id="@item.Id">Редактировать</a> |
+            <a class="delete-button" asp-action="DeleteTeam" asp-route-id="@item.Id">Удалить</a>
+        </p>
+    }
+</div>

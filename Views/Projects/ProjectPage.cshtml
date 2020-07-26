@@ -1,0 +1,32 @@
+﻿@model Projects_Workshop.Models.Entities.Project
+@{
+    ViewData["Title"] = Model.Name;
+}
+<div class="big-card ">
+    <h3>@Model.Name</h3>
+    <p><b>Направление: </b>@Model.Theme</p>
+    <p><b>Краткое описание: </b><br />@Model.ShortDescription</p>
+    <p><b>Цель: </b><br />@Model.GoalDescription</p>
+    <p><b>Описание проекта (Проблема): </b><br />@Model.ProblemDescription</p>
+    <p><b>Роли и компетенции: </b><br />@Model.RolesDescription</p>
+    <p><b>Результат / Продукт: </b><br />@Model.ResultDescription</p>
+    <p><b>Куратор проекта: </b><br />@Model.Curator</p>
+    <p><b>Организация заказчика: </b><br />@Model.CustomerOrganization</p>
+    <p><b>Контакты представителя заказчика: </b><br />@Model.CustomerContacts</p>
+    <p>
+        <b>Участники: </b>
+        @foreach (var team in Model.Teams)
+        {
+            foreach (var participant in team.Members)
+            {
+                var lineBreak = "\n";
+                @participant.Name <text> (</text>@team.Name<text>)@lineBreak</text>
+            }
+        }
+    </p>
+    <br />
+    <div class="project-page-buttons">
+        <a class="edit-button" asp-action="ProjectEditor" asp-route-id="@Model.Id">Редактировать</a>
+        <a class="delete-button" asp-action="DeleteProject" asp-route-id="@Model.Id">Удалить</a>
+    </div>
+</div>

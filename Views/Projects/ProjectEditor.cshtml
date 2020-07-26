@@ -1,0 +1,63 @@
+﻿@model Projects_Workshop.Models.ViewModels.ProjectEditor
+@{
+    ViewData["Title"] = "Project Editor";
+}
+@if (TempData["message"] != null)
+{
+    string alertType = "alert alert-" + TempData["alertType"];
+    <div class="@alertType">
+        @TempData["message"]
+    </div>
+}
+@{
+    var title = Model.ProjectName ?? "Новый проект";
+}
+<form role="form" asp-action="AddProject">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="big-card">
+            <h3>@title</h3> <br />
+            <label>Название проекта: </label>
+            @Html.EditorFor(model => model.ProjectName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ProjectName, "", new { @class = "text-danger" })<br />
+            <label>Направление: </label>
+            @Html.EditorFor(model => model.Theme, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Куратор проекта: </label>
+            @Html.EditorFor(model => model.Curator, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Краткое описание: </label> <br />
+            @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Цель: </label> <br />
+            @Html.EditorFor(model => model.GoalDescription, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Описание проекта (Проблема): </label> <br />
+            @Html.EditorFor(model => model.ProblemDescription, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Роли и компетенции: </label> <br />
+            @Html.EditorFor(model => model.RolesDescription, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Результат / Продукт: </label> <br />
+            @Html.EditorFor(model => model.ResultDescription, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Организация заказчика: </label> <br />
+            @Html.EditorFor(model => model.CustomerOrganization, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Контакты представителя заказчика: </label> <br />
+            @Html.EditorFor(model => model.CustomerContacts, new { htmlAttributes = new { @class = "form-control" } })<br />
+            <label>Команды: </label> <br />
+            <div class="big-select">
+                <select multiple="multiple" asp-for="SelectedTeams" asp-items="Model.AllTeams" id="team-selection"></select>
+            </div>
+            <br />
+            <div class="project-page-buttons">
+                <input type="submit" value="Сохранить" class="submit-button" />
+                @if (Model.ProjectId == null)
+                {
+                    <a class="delete-button" asp-action="AllProjects">Отмена</a>
+                }
+                else
+                {
+                    <a class="delete-button" asp-action="ProjectPage" asp-route-id="@Model.ProjectId">Отмена</a>
+                }
+            </div>
+            <div hidden>
+                @Html.EditorFor(model => model.ProjectId)
+            </div>
+        </div>
+    }
+</form>

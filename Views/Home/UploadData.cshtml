@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Загрузка данных";
+}
+<h1>@ViewData["Title"]</h1>
+<div class="upload-data-container">
+    <p>
+        Данный раздел предназначен для быстрой загрузки данных в сервис.
+        Для корректной работы необходимо загрузить <b>.TSV</b> файл с данными.
+        Загружаемый файл должен быть отформатирован <a href="https://ru.wikipedia.org/wiki/TSV">соответсвующим</a> образом.
+        Примеры отформатированных файлов можно скачать по ссылке "Пример" в каждом из разделов.
+    </p>
+    <p>
+        <b>Важно!</b> Для корректной работы данные нужно загружать в следующем порядке: Проекты -> Команды -> Студенты.<br />
+        Загрузка даных в другом порядке может привести к ошибкам!
+    </p>
+    <h3>Загрузка данных о проектах</h3>
+    <form class="upload-data-form" method="post" enctype="multipart/form-data" asp-action="ReadProjectsData">
+        <a asp-action="DownloadExample" asp-route-type="projects">Пример</a>
+        <div class="form-group">
+            <input type="file" name="file" class="custom-data-upload" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Загрузить проекты" class="upload-data-button" />
+        </div>
+    </form>
+
+    <h3>Загрузка данных о командах</h3>
+    <form class="upload-data-form" method="post" enctype="multipart/form-data" asp-action="ReadTeamsData">
+        <a asp-action="DownloadExample" asp-route-type="teams">Пример</a>
+        <div class="form-group">
+            <input type="file" name="file" class="custom-data-upload" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Загрузить команды" class="upload-data-button" />
+        </div>
+    </form>
+
+    <h3>Загрузка данных о студентах</h3>
+    <form class="upload-data-form" method="post" enctype="multipart/form-data" asp-action="ReadUsersData">
+        <a asp-action="DownloadExample" asp-route-type="users">Пример</a>
+        <div class="form-group">
+            <input type="file" name="file" class="custom-data-upload" />
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Загрузить студентов" class="upload-data-button" />
+        </div>
+    </form>
+</div>

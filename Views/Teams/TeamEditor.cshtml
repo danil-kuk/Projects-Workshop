@@ -1,0 +1,39 @@
+﻿@model Projects_Workshop.Models.ViewModels.TeamEditor
+@{
+    ViewData["Title"] = "Team Editor";
+}
+@if (TempData["message"] != null)
+{
+    string alertType = "alert alert-" + TempData["alertType"];
+    <div class="@alertType">
+        @TempData["message"]
+    </div>
+}
+@{
+    var title = Model.TeamName ?? "Новая команда";
+}
+<form role="form" asp-action="AddTeam">
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="big-card">
+            <h3>@title</h3>
+            <label>Название команды: </label>
+            @Html.EditorFor(model => model.TeamName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.TeamName, "", new { @class = "text-danger" })
+            <br />
+            <label>Проект: </label> <br />
+            <div class="small-select">
+                <select asp-for="SelectedProject" asp-items="Model.AllProjects"></select>
+            </div>
+            <br />
+            <div class="project-page-buttons">
+                <input type="submit" value="Сохранить" class="submit-button" />
+                <a class="delete-button" asp-action="AllTeams">Отмена</a>
+            </div>
+            <div hidden>
+                @Html.EditorFor(model => model.TeamId)
+            </div>
+        </div>
+    }
+</form>
